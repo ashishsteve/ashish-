@@ -7,12 +7,14 @@ options = Options()
 options.add_experimental_option("detach", True)
 driver= webdriver.Edge(options=options)
 
-driver.get("https://www.google.com/")
+driver.get("http://www.deadlinkcity.com/")
 driver.maximize_window()
+alllinks=driver.find_element(By.TAG_NAME,'a')
+count=0
 
-searchbox=driver.find_element(By.NAME,'q')
-
-searchbox.send_keys("Selenium")
-searchbox.submit()
-
-driver.find_element(By.XPATH,'//h3[normalize-space()='Selenium']')
+for link in alllinks:
+    url=link.get_attribute('href')
+    res= requests.head(url)
+    if_res.status_code>=400:
+       print(url,"is broken link")
+       count+=1
